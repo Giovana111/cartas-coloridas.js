@@ -1,64 +1,92 @@
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: #79c7dd;
-  padding: 20px;
+body{
+font-family: Arial, sans-serif;
+background: linear-gradient(135deg,#667eea,#764ba2);
+text-align:center;
+color:white;
+margin:0;
+padding:20px;
 }
 
-#grid {
-  display: grid;
-  grid-template-columns: repeat(4, 80px);
-  grid-gap: 10px;
-  justify-content: center;
-  margin-top: 20px;
+h1{
+margin-bottom:10px;
 }
 
-.square {
-  width: 80px;
-  height: 80px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.2s;
+input{
+padding:10px;
+border-radius:8px;
+border:none;
+margin:5px;
 }
 
-.square:hover {
-  transform: scale(1.1);
+button{
+padding:10px 20px;
+border:none;
+border-radius:8px;
+background:#ff9800;
+color:white;
+font-weight:bold;
+cursor:pointer;
 }
 
-.hidden {
-  display: none;
+button:hover{
+background:#ff7300;
 }
 
-button {
-  background-color: #0077b6;
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+#info{
+margin:20px auto;
+background:rgba(255,255,255,0.1);
+padding:10px;
+border-radius:10px;
+width:250px;
 }
 
-button:hover {
-  background-color: #023e8a;
-  transform: scale(1.05);
+#grid{
+display:grid;
+grid-template-columns:repeat(4,70px);
+gap:10px;
+justify-content:center;
+margin-top:20px;
 }
 
+.square{
+width:70px;
+height:70px;
+border-radius:10px;
+cursor:pointer;
+transition:transform 0.2s;
+}
 
-h1 {
-  font-size: 36px;
-  color: #03045e;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-  margin-bottom: 20px;
-} 
+.square:hover{
+transform:scale(1.1);
+}
 
-  input[type="text"] {
-  width: 220px;
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+#endGame{
+margin-top:20px;
+background:rgba(0,0,0,0.3);
+padding:20px;
+border-radius:10px;
+}
+
+.hidden{
+display:none;
+}
+
+h3{
+margin-top:30px;
+}
+
+#ranking{
+list-style:none;
+padding:0;
+max-width:250px;
+margin:0 auto;
+}
+
+#ranking li{
+background:white;
+color:black;
+margin:5px;
+padding:8px;
+border-radius:6px;
+font-weight:bold;
 }
