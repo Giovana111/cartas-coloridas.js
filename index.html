@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Desafio das Cores</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desafio das Cores</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <h1>Cartas coloridas</h1>
-  <input type="text" id="playerName" placeholder="Digite seu nome">
-  <button id="startBtn">Jogar</button>
 
-  <div id="info">
-    <p>Cor alvo: <span id="targetColor">---</span></p>
-    <p>Pontuação: <span id="score">0</span></p>
-    <p>Tempo restante: <span id="time">60</span>s</p>
-  </div>
+<h1>Cartas Coloridas</h1>
 
-  <div id="grid"></div>
+<input type="text" id="playerName" placeholder="Digite seu nome">
+<button id="startBtn">Jogar</button>
 
-  <div id="endGame" class="hidden">
-    <h2>Fim de jogo!</h2>
-    <p>Jogador: <span id="finalPlayer"></span></p>
-    <p>Pontuação final: <span id="finalScore"></span></p>
-    <button onclick="startGame()">Jogar novamente</button>
-  </div>
+<div id="info">
+<p>Cor alvo: <span id="targetColor">---</span></p>
+<p>Pontuação: <span id="score">0</span></p>
+<p>Tempo restante: <span id="time">50</span>s</p>
+</div>
 
-  <h3>Ranking dos Melhores Jogadores</h3>
-  <ol id="ranking"></ol>
+<div id="grid"></div>
 
-  <script src="script.js"></script>
+<div id="endGame" class="hidden">
+<h2>Fim de jogo!</h2>
+<p>Jogador: <span id="finalPlayer"></span></p>
+<p>Pontuação final: <span id="finalScore"></span></p>
+<button onclick="startGame()">Jogar novamente</button>
+</div>
+
+<h3>Ranking dos Melhores Jogadores</h3>
+<ol id="ranking"></ol>
+
+<script src="script.js"></script>
 </body>
 </html>
