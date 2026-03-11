@@ -15,127 +15,138 @@ let time = 50;
 let interval = null;
 let playerName = "";
 
-function getRandomColor() {
-  return colors[Math.floor(Math.random() * colors.length)];
+function getRandomColor(){
+return colors[Math.floor(Math.random() * colors.length)];
 }
 
-function createGrid() {
-  grid.innerHTML = "";
+function createGrid(){
+grid.innerHTML = "";
 
-  for (let i = 0; i < 16; i++) {
-    const div = document.createElement("div");
-    const color = getRandomColor();
+for(let i=0;i<16;i++){
 
-    div.classList.add("square");
-    div.style.backgroundColor = color;
-    div.dataset.color = color;
+const div = document.createElement("div");
+const color = getRandomColor();
 
-    div.onclick = () => handleClick(div);
+div.classList.add("square");
+div.style.backgroundColor = color;
+div.dataset.color = color;
 
-    grid.appendChild(div);
-  }
+div.onclick = () => handleClick(div);
+
+grid.appendChild(div);
+}
 }
 
-function handleClick(div) {
-  if (time <= 0) return;
+function handleClick(div){
 
-  const clickedColor = div.dataset.color;
+if(time <= 0) return;
 
-  if (clickedColor === targetColor) {
-    score += 10;
-  } else {
-    score = Math.max(0, score - 5);
-  }
+const clickedColor = div.dataset.color;
 
-  updateScore();
-  updateTargetColor();
-  createGrid();
+if(clickedColor === targetColor){
+score += 10;
+}else{
+score = Math.max(0, score - 5);
 }
 
-function updateTargetColor() {
-  targetColor = getRandomColor();
-  targetColorSpan.textContent = targetColor;
+updateScore();
+updateTargetColor();
+createGrid();
 }
 
-function updateScore() {
-  scoreSpan.textContent = score;
+function updateTargetColor(){
+targetColor = getRandomColor();
+targetColorSpan.textContent = targetColor;
 }
 
-function updateTimer() {
-
-  if (time <= 0) {
-    clearInterval(interval);
-    time = 0;
-    timeSpan.textContent = time;
-    endGame();
-    return;
-  }
-
-  time--;
-  timeSpan.textContent = time;
+function updateScore(){
+scoreSpan.textContent = score;
 }
 
-function startGame() {
+function updateTimer(){
 
-  playerName = document.getElementById("playerName").value.trim();
-
-  if (!playerName) {
-    alert("Digite seu nome antes de começar!");
-    return;
-  }
-
-  if (interval) {
-    clearInterval(interval);
-  }
-
-  score = 0;
-  time = 50;
-
-  updateScore();
-  timeSpan.textContent = time;
-
-  updateTargetColor();
-  createGrid();
-
-  endGameDiv.classList.add("hidden");
-
-  interval = setInterval(updateTimer, 1000);
+if(time <= 0){
+clearInterval(interval);
+interval = null;
+return;
 }
 
-function endGame() {
-  finalScoreSpan.textContent = score;
-  finalPlayerSpan.textContent = playerName;
+time--;
+timeSpan.textContent = time;
 
-  endGameDiv.classList.remove("hidden");
-
-  saveRanking(playerName, score);
-  renderRanking();
+if(time === 0){
+clearInterval(interval);
+interval = null;
+endGame();
+}
 }
 
-function saveRanking(name, score) {
-  let ranking = JSON.parse(localStorage.getItem("ranking")) || [];
+function startGame(){
 
-  ranking.push({ name, score });
+playerName = document.getElementById("playerName").value.trim();
 
-  ranking.sort((a, b) => b.score - a.score);
-
-  ranking = ranking.slice(0, 5);
-
-  localStorage.setItem("ranking", JSON.stringify(ranking));
+if(!playerName){
+alert("Digite seu nome antes de começar!");
+return;
 }
 
-function renderRanking() {
-  const ranking = JSON.parse(localStorage.getItem("ranking")) || [];
+clearInterval(interval);
 
-  rankingList.innerHTML = "";
+score = 0;
+time = 50;
 
-  ranking.forEach(player => {
-    const li = document.createElement("li");
-    li.textContent = `${player.name} - ${player.score}`;
-    rankingList.appendChild(li);
-  });
+updateScore();
+timeSpan.textContent = time;
+
+updateTargetColor();
+createGrid();
+
+endGameDiv.classList.add("hidden");
+
+interval = setInterval(updateTimer,1000);
 }
 
-startBtn.addEventListener("click", startGame);
+function endGame(){
+
+finalScoreSpan.textContent = score;
+finalPlayerSpan.textContent = playerName;
+
+endGameDiv.classList.remove("hidden");
+
+saveRanking(playerName,score);
+renderRanking();
+}
+
+function saveRanking(name,score){
+
+let ranking = JSON.parse(localStorage.getItem("ranking")) || [];
+
+ranking.push({name,score});
+
+ranking.sort((a,b)=> b.score - a.score);
+
+ranking = ranking.slice(0,5);
+
+localStorage.setItem("ranking",JSON.stringify(ranking));
+}
+
+function renderRanking(){
+
+const ranking = JSON.parse(localStorage.getItem("ranking")) || [];
+
+rankingList.innerHTML = "";
+
+ranking.forEach(player=>{
+
+const li = document.createElement("li");
+
+li.textContent = `${player.name} - ${player.score}`;
+
+rankingList.appendChild(li);
+
+});
+}
+
+startBtn.addEventListener("click",startGame);
 
 renderRanking();
