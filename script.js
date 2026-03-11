@@ -11,8 +11,8 @@ const startBtn = document.getElementById("startBtn");
 let colors = ["red", "blue", "green", "yellow", "purple", "orange"];
 let targetColor = "";
 let score = 0;
-let time = 60;
-let interval;
+let time = 50;
+let interval = null;
 let playerName = "";
 
 function getRandomColor() {
@@ -21,24 +21,32 @@ function getRandomColor() {
 
 function createGrid() {
   grid.innerHTML = "";
+
   for (let i = 0; i < 16; i++) {
     const div = document.createElement("div");
     const color = getRandomColor();
+
     div.classList.add("square");
     div.style.backgroundColor = color;
     div.dataset.color = color;
+
     div.onclick = () => handleClick(div);
+
     grid.appendChild(div);
   }
 }
 
 function handleClick(div) {
+  if (time <= 0) return;
+
   const clickedColor = div.dataset.color;
+
   if (clickedColor === targetColor) {
     score += 10;
   } else {
     score = Math.max(0, score - 5);
   }
+
   updateScore();
   updateTargetColor();
   createGrid();
@@ -54,33 +62,50 @@ function updateScore() {
 }
 
 function updateTimer() {
-  time--;
-  timeSpan.textContent = time;
+
   if (time <= 0) {
     clearInterval(interval);
+    time = 0;
+    timeSpan.textContent = time;
     endGame();
+    return;
   }
+
+  time--;
+  timeSpan.textContent = time;
 }
 
 function startGame() {
+
   playerName = document.getElementById("playerName").value.trim();
+
   if (!playerName) {
     alert("Digite seu nome antes de começar!");
     return;
   }
 
+  if (interval) {
+    clearInterval(interval);
+  }
+
   score = 0;
-  time = 60;
+  time = 50;
+
   updateScore();
+  timeSpan.textContent = time;
+
   updateTargetColor();
   createGrid();
+
   endGameDiv.classList.add("hidden");
+
   interval = setInterval(updateTimer, 1000);
 }
 
 function endGame() {
   finalScoreSpan.textContent = score;
   finalPlayerSpan.textContent = playerName;
+
   endGameDiv.classList.remove("hidden");
 
   saveRanking(playerName, score);
@@ -89,15 +114,21 @@ function endGame() {
 
 function saveRanking(name, score) {
   let ranking = JSON.parse(localStorage.getItem("ranking")) || [];
+
   ranking.push({ name, score });
+
   ranking.sort((a, b) => b.score - a.score);
+
   ranking = ranking.slice(0, 5);
+
   localStorage.setItem("ranking", JSON.stringify(ranking));
 }
 
 function renderRanking() {
   const ranking = JSON.parse(localStorage.getItem("ranking")) || [];
+
   rankingList.innerHTML = "";
+
   ranking.forEach(player => {
     const li = document.createElement("li");
     li.textContent = `${player.name} - ${player.score}`;
@@ -106,4 +137,5 @@ function renderRanking() {
 }
 
 startBtn.addEventListener("click", startGame);
+
 renderRanking();
